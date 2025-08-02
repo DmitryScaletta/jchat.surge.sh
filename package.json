@@ -1,0 +1,19 @@
+{
+  "name": "jchat.surge.sh",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "serve": "pnpm dlx serve static",
+    "deploy": "surge static jchat.surge.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "DmitryScaletta",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.3",
+  "devDependencies": {
+    "@types/node": "^24.1.0"
+  }
+}
