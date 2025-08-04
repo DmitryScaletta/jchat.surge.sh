@@ -28,20 +28,17 @@ const main = async () => {
   }
 
   const STYLES_REGEX = /href:"(styles\/[^"]+\.css)"/g;
-
-  for (const m of scripts.jchat.matchAll(STYLES_REGEX)) {
-    const url = m[1];
+  const styles = [
+    `${BASE_URL}styles/style.css`,
+    ...[...scripts.jchat.matchAll(STYLES_REGEX)].map((m) => m[1]),
+  ];
+  for (const url of styles) {
     const basename = path.basename(url);
     const dest = path.resolve('.', 'static', 'styles', basename);
     if (fs.existsSync(dest)) continue;
     console.log('Downloading', BASE_URL + url);
     await downloadFile(BASE_URL + url, dest);
   }
-
-  await downloadFile(
-    'https://www.giambaj.it/twitch/jchat/v2/styles/style.css',
-    path.resolve('.', 'static', 'styles', 'style.css'),
-  );
 
   const promises: Promise<any>[] = [];
   for (const [name, content] of Object.entries(scripts)) {

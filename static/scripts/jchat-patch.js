@@ -87,10 +87,7 @@ const handlers = {
     }
     const result = [];
     for (const [setId, badges] of Object.entries(badgesBySetId)) {
-      const versions = [];
-      for (const badgeVersion of badges) {
-        versions.push(normalizeBadgeVersion(badgeVersion));
-      }
+      const versions = badges.map(normalizeBadgeVersion);
       result.push({ set_id: setId, versions });
     }
     cb({ data: result });
@@ -133,13 +130,11 @@ const handlers = {
   },
 
   '/chat/badges': (cb, [, chatListBadges]) => {
-    const out = [];
-    const versions = [];
-    for (const badgeVersion of chatListBadges.data.user.broadcastBadges) {
-      versions.push(normalizeBadgeVersion(badgeVersion));
-    }
-    out.push({ set_id: 'subscriber', versions });
-    cb({ data: out });
+    const result = [];
+    const badges = chatListBadges.data.user.broadcastBadges;
+    const versions = badges.map(normalizeBadgeVersion);
+    result.push({ set_id: 'subscriber', versions });
+    cb({ data: result });
   },
 };
 
