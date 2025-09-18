@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.ts",
-    "serve": "pnpm dlx serve static",
-    "deploy": "surge static jchat.surge.sh",
+    "serve": "pnpm dlx serve docs",
+    "deploy": "surge docs jchat.surge.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

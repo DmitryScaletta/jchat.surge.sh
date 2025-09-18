@@ -16,8 +16,8 @@ const downloadFile = async (url: string, dest: string) => {
 };
 
 const main = async () => {
-  await fsp.mkdir(path.resolve('.', 'static', 'scripts'), { recursive: true });
-  await fsp.mkdir(path.resolve('.', 'static', 'styles'), { recursive: true });
+  await fsp.mkdir(path.resolve('.', 'docs', 'scripts'), { recursive: true });
+  await fsp.mkdir(path.resolve('.', 'docs', 'styles'), { recursive: true });
 
   type Scripts = Record<keyof typeof SCRIPTS, string>;
   const scripts = {} as Scripts;
@@ -34,7 +34,7 @@ const main = async () => {
   ];
   for (const url of styles) {
     const basename = path.basename(url);
-    const dest = path.resolve('.', 'static', 'styles', basename);
+    const dest = path.resolve('.', 'docs', 'styles', basename);
     if (fs.existsSync(dest)) continue;
     console.log('Downloading', BASE_URL + url);
     await downloadFile(BASE_URL + url, dest);
@@ -42,7 +42,7 @@ const main = async () => {
 
   const promises: Promise<any>[] = [];
   for (const [name, content] of Object.entries(scripts)) {
-    const dest = path.resolve('.', 'static', 'scripts', `${name}.js`);
+    const dest = path.resolve('.', 'docs', 'scripts', `${name}.js`);
     promises.push(fsp.writeFile(dest, content));
   }
   await Promise.all(promises);
