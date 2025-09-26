@@ -9,6 +9,11 @@ const SCRIPTS = {
   jchat: `${BASE_URL}jchat.js`,
 };
 
+const DEFAULT_FONT_CSS = `#chat_container {
+  font-family: Inter, "Noto Sans Arabic", Roobert, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}`;
+
 const downloadFile = async (url: string, dest: string) => {
   const res = await fetch(url);
   const data = await res.arrayBuffer();
@@ -47,19 +52,13 @@ const main = async () => {
   }
   await Promise.all(promises);
 
-  // Replace default font "Baloo Tammudu 2" font with "Inter"
-  const cssFilename = path.resolve(
+  const defaultFontFilename = path.resolve(
     '.',
     'docs',
     'styles',
     'font_BalooTammudu.css',
   );
-  let cssContent = await fsp.readFile(cssFilename, 'utf-8');
-  cssContent = cssContent.replace(
-    "'Baloo Tammudu 2', cursive",
-    'Inter, "Noto Sans Arabic", Roobert, "Helvetica Neue", Helvetica, Arial, sans-serif',
-  );
-  await fsp.writeFile(cssFilename, cssContent);
+  await fsp.writeFile(defaultFontFilename, DEFAULT_FONT_CSS);
 };
 
 main();
