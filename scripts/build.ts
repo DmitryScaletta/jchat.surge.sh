@@ -46,6 +46,20 @@ const main = async () => {
     promises.push(fsp.writeFile(dest, content));
   }
   await Promise.all(promises);
+
+  // Replace default font "Baloo Tammudu 2" font with "Inter"
+  const cssFilename = path.resolve(
+    '.',
+    'docs',
+    'styles',
+    'font_BalooTammudu.css',
+  );
+  let cssContent = await fsp.readFile(cssFilename, 'utf-8');
+  cssContent = cssContent.replace(
+    "'Baloo Tammudu 2', cursive",
+    'Inter, "Noto Sans Arabic", Roobert, "Helvetica Neue", Helvetica, Arial, sans-serif',
+  );
+  await fsp.writeFile(cssFilename, cssContent);
 };
 
 main();
