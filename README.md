@@ -24,4 +24,5 @@ Available fonts:
 ## Examples
 
 https://jchat.surge.sh/?channel=distortion2&size=1&font=7&hide_commands=true&fade=30&hide_badges=true&shadow=1
+
 https://dmitryscaletta.github.io/jchat.surge.sh/?channel=distortion2&size=1&hide_commands=true&fade=60&hide_badges=true&shadow=1
