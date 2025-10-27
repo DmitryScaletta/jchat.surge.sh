@@ -12,7 +12,7 @@ Original project: https://www.giambaj.it/twitch/jchat/
 
 1. Go to https://www.giambaj.it/twitch/jchat/
 1. Configure the chat and generate a URL
-1. Replace `https://www.giambaj.it/twitch/jchat/v2/` in the URL with `https://jchat.surge.sh/` or `https://dmitryscaletta.github.io/`
+1. Replace `https://www.giambaj.it/twitch/jchat/v2/` in the URL with `https://jchat.surge.sh/` or `https://dmitryscaletta.github.io/jchat.surge.sh/`
 
 The default font **Baloo Tammudu** is replaced with **Inter** (the same as on Twitch)
 
