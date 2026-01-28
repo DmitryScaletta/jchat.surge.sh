@@ -59,6 +59,14 @@ const main = async () => {
     'font_BalooTammudu.css',
   );
   await fsp.writeFile(defaultFontFilename, DEFAULT_FONT_CSS);
+
+  const jChatJsFilename = path.resolve('.', 'docs', 'scripts', 'jchat.js');
+  const jChatJs = await fsp.readFile(jChatJsFilename, 'utf-8');
+  const jChatJsWithBaseURL = jChatJs.replaceAll(
+    'image:`https:${e.data.host.url}/${t.name}`',
+    'image:`${$.QueryString["7tvProxy"]||""}https:${e.data.host.url}/${t.name}`',
+  );
+  await fsp.writeFile(jChatJsFilename, jChatJsWithBaseURL);
 };
 
 main();

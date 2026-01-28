@@ -12,7 +12,7 @@ const ops = [
   gqlQuery('BitsConfigContext_Global', '6a265b86f3be1c8d11bdcf32c183e106028c6171e985cc2584d15f7840f5fee6', {}),
   gqlQuery('GlobalBadges',             '9db27e18d61ee393ccfdec8c7d90f14f9a11266298c2e5eb808550b77d7bcdf6', {}),
 ];
-const promise = fetch('https://gql.twitch.tv/gql', {
+const twitchApiPromise = fetch('https://gql.twitch.tv/gql', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ $.ajax = (opts) => {
   const handler = handlers[url.pathname];
   if (!handler) return _ajax(opts);
   const done = (cb) =>
-    promise.then((res) =>
+    twitchApiPromise.then((res) =>
       handler((data) => {
         console.log(path);
         console.log(data);

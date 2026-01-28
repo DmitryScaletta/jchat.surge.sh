@@ -7,6 +7,7 @@ Original project: https://www.giambaj.it/twitch/jchat/
 * Client Only (no server needed)
 * All static assets (css, js, fonts and twitter emojis) are located next to the html file for high availability
 * The default font is the same as on Twitch
+* `7tvProxy` parameter
 
 ## Usage
 
