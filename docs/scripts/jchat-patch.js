@@ -7,7 +7,7 @@ const gqlQuery = (operationName, sha256Hash, variables) => ({
 });
 // prettier-ignore
 const ops = [
-  gqlQuery('ChannelShell',             '580ab410bcd0c1ad194224957ae2241e5d252b2c5173d8e0cce9d32d5bb14efe', { login }),
+  gqlQuery('ChannelShell',             'fea4573a7bf2644f5b3f2cbbdcbee0d17312e48d2e55f080589d053aad353f11', { login }),
   gqlQuery('ChatList_Badges',          '838a7e0b47c09cac05f93ff081a9ff4f876b68f7624f0fc465fe30031e372fc2', { channelLogin: login }),
   gqlQuery('BitsConfigContext_Global', '6a265b86f3be1c8d11bdcf32c183e106028c6171e985cc2584d15f7840f5fee6', {}),
   gqlQuery('GlobalBadges',             '9db27e18d61ee393ccfdec8c7d90f14f9a11266298c2e5eb808550b77d7bcdf6', {}),
@@ -56,6 +56,17 @@ const normalizeBadgeVersion = (badgeVersion) => ({
   click_url: badgeVersion.clickURL,
 });
 
+const getBadges = (badges) => {
+  const badgesBySetId = {};
+  for (const badge of badges) {
+    const setId = badge.setID;
+    if (!badgesBySetId[setId]) badgesBySetId[setId] = [];
+    badgesBySetId[setId].push(normalizeBadgeVersion(badge));
+  }
+  return Object.entries(badgesBySetId)
+    .map(([set_id, versions]) => ({ set_id, versions }));
+};
+
 const handlers = {
   '/users': (cb, [channelShell]) => {
     const user = channelShell.data.userOrError;
@@ -78,19 +89,7 @@ const handlers = {
   },
 
   '/chat/badges/global': (cb, [, , , globalBadges]) => {
-    const badges = globalBadges.data.badges;
-    const badgesBySetId = {};
-    for (const badge of badges) {
-      const setId = badge.setID;
-      if (!badgesBySetId[setId]) badgesBySetId[setId] = [];
-      badgesBySetId[setId].push(badge);
-    }
-    const result = [];
-    for (const [setId, badges] of Object.entries(badgesBySetId)) {
-      const versions = badges.map(normalizeBadgeVersion);
-      result.push({ set_id: setId, versions });
-    }
-    cb({ data: result });
+    cb({ data: getBadges(globalBadges.data.badges) });
   },
 
   '/bits/cheermotes': (cb, [, , bitsCfg]) => {
@@ -130,11 +129,7 @@ const handlers = {
   },
 
   '/chat/badges': (cb, [, chatListBadges]) => {
-    const result = [];
-    const badges = chatListBadges.data.user.broadcastBadges;
-    const versions = badges.map(normalizeBadgeVersion);
-    result.push({ set_id: 'subscriber', versions });
-    cb({ data: result });
+    cb({ data: getBadges(chatListBadges.data.user.broadcastBadges) });
   },
 };
 
