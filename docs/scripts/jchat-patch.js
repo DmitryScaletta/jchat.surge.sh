@@ -135,7 +135,7 @@ const handlers = {
 
 const _ajax = $.ajax;
 $.ajax = (opts) => {
-  if (!opts.url.startsWith('https://giambaj.it/twitch/api/')) {
+  if (!opts.url.startsWith(window.location.origin + '/twitch/api/')) {
     return _ajax(opts);
   }
   const endpoint = new URL(opts.url).searchParams.get('endpoint');
